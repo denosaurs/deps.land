@@ -1,5 +1,7 @@
 import "../styles/globals.css";
 
+export const fetcher = (url: string) => fetch(url).then((r) => r.json());
+
 import type { AppProps } from "next/app";
 
 function MyApp({ Component, pageProps }: AppProps) {
