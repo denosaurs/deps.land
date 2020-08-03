@@ -1,16 +1,6 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,700;1,300;1,700&family=Sora&display=swap");
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+@import "tailwindcss/base";
+@import "tailwindcss/components";
 
-* {
-  box-sizing: border-box;
-}
+@import "tailwindcss/utilities";
