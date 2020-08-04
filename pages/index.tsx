@@ -2,8 +2,6 @@ import * as React from "react";
 import Head from "next/head";
 import useSWR from "swr";
 
-import GitHubIcon from "../public/icons/github.svg";
-import DiscordIcon from "../public/icons/discord.svg";
 import { fetcher } from "./_app";
 
 function Home() {
@@ -14,46 +12,40 @@ function Home() {
       <Head>
         <title>deps.land — land of the Deno modules // deps.land</title>
       </Head>
-      <header className="dark:border-white border-black border-b-2">
-        <div className="container px-2 py-4 max-w-5xl mx-auto">
-          <div className="flex items-center justify-between">
-            <h1 className="text-3xl flex items-center dark:text-white font-bold">
-              deps.land
-            </h1>
-            <div>
-              <a
-                href="https://github.com/denosaurs/deps.land"
-                target="_blank"
-                rel="noopener nofollow"
-              >
-                <GitHubIcon className="fill-current dark:text-white h-8 w-8" />
-              </a>
+      <header className="px-4 pt-4 bg-white dark:bg-gray-800">
+        <div className="container max-w-6xl mx-auto px-4">
+          <h1 className="text-3xl font-bold">Deps.land</h1>
+          <p>
+            Index of {count ? count.number : "~"} deno modules and applications.
+          </p>
+          <form>
+            <div className="py-3">
+              <div className="inline-flex">
+                <input
+                  className="bg-gray-700 text-gray-800 font-bold py-2 px-4 rounded-l"
+                  id="search"
+                  type="text"
+                  placeholder="name, keyword, ..."
+                />
+                <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
+                  Search
+                </button>
+              </div>
             </div>
-          </div>
-          <div className="mt-2 flex items-center justify-between">
-            <div>
-              <p>
-                Index of {count ? count.number : "~"} deno modules and
-                applications.
-              </p>
+          </form>
+          <nav className="flex flex-row">
+            <div className="bg-white dark:bg-gray-900 text-center px-4 mt-2 mx-1">
+              Categories
             </div>
-            <div>
-              <a
-                href="https://github.com/denosaurs/deps.land"
-                target="_blank"
-                rel="noopener nofollow"
-              >
-                <DiscordIcon className="fill-current dark:text-white h-8 w-8" />
-              </a>
+            <div className="bg-white dark:bg-gray-900 text-center px-4 mt-2 mx-1">
+              Popular
             </div>
-          </div>
+            <div className="bg-white dark:bg-gray-900 text-center px-4 mt-2 mx-1">
+              New
+            </div>
+          </nav>
         </div>
       </header>
-      <footer className="my-10 py-5 text-gray-500">
-        <div className="container px-2 max-w-2xl mx-auto">
-          &copy; {new Date().getFullYear()} Denosaurs.
-        </div>
-      </footer>
     </div>
   );
 }

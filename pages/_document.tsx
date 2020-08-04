@@ -18,7 +18,7 @@ class MyDocument extends Document {
         <Head>
           <link rel="stylesheet" href="/fonts/inter/inter.css" />
         </Head>
-        <body className="bg-white dark:bg-surface text-black dark:text-white">
+        <body className="bg-white dark:bg-gray-900 text-black dark:text-white">
           <Main />
           <NextScript />
         </body>
