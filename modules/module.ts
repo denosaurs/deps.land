@@ -4,6 +4,7 @@ import {
   VersionMetaInfo,
   getVersionMeta,
   getModules,
+  SearchResult,
 } from "./x";
 import { getNestModule, ModuleNest } from "./nest";
 
@@ -21,9 +22,10 @@ export interface ModuleMeta {
 export class Module {
   static async info(name: string): Promise<ModuleInfo | null> {
     const version = await getVersionList(name);
-    const res = await getModules(1, 1, name);
+    const res = await getModules(1, 2, name);
     if (!version || !res || res.results.length === 0) return null;
-    const mod = res.results[0];
+    const mod = res.results.find((r) => r.name === name);
+    if (!mod) return null;
     return {
       name,
       description: mod.description,
@@ -40,15 +42,29 @@ export class Module {
     };
   }
 
-  static async registries(name: string): Promise<ModuleNest | null> {
+  static async nest(name: string): Promise<ModuleNest | null> {
     return await getNestModule(name);
   }
 }
 
+export interface ModulesQuery {
+  results: SearchResult[];
+  totalCount: number;
+}
+
 export class Modules {
-  static async cound(): Promise<number | null> {
+  static async count(): Promise<number | null> {
     const res = await getModules(1, 1, "");
     if (res.results.length === 0) return null;
     return res.totalCount;
+  }
+  static async query(
+    page: number,
+    limit: number,
+    query: string
+  ): Promise<ModulesQuery | null> {
+    const res = await getModules(page, limit, query);
+    if (res.results.length === 0) return null;
+    return res;
   }
 }

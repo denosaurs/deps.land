@@ -4,3 +4,7 @@
 @import "tailwindcss/components";
 
 @import "tailwindcss/utilities";
+
+.modules > li:not(:last-child)::after {
+  content: ", ";
+}
