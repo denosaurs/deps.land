@@ -4,9 +4,9 @@ import { Module } from "../../../../modules/module";
 const handler: NextApiHandler = async (req, res) => {
   res.setHeader("Content-Type", "application/json");
 
-  let { module = "std" } = req.query;
-  if (Array.isArray(module)) module = module.join("");
+  let { path } = req.query;
 
+  let module = path[0];
   let version = undefined;
   if (module.includes("@")) {
     const split = module.split("@");
@@ -21,15 +21,19 @@ const handler: NextApiHandler = async (req, res) => {
     version = info.latest;
   }
 
-  let mod = await Module.meta(module, version);
+  path = path.slice(1);
+  if (Array.isArray(path)) path = path.join("/");
+  if (!path.startsWith("/")) path = `/${path}`;
 
-  if (!mod) {
+  let source = await Module.source(module, version, path);
+
+  if (!source) {
     res.status(404).json({ message: "Module not found." });
     return;
   }
 
   res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate");
-  res.status(200).json(mod);
+  res.status(200).json({ source });
 };
 
 export default handler;

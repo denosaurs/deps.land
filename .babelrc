@@ -1,0 +1,11 @@
+{
+  "presets": [
+    [
+      "next/babel",
+      {
+        "babel-plugin-root-import": {}
+      }
+    ]
+  ],
+  "plugins": []
+}

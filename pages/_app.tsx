@@ -1,4 +1,5 @@
-import "../styles/globals.css";
+import "~/styles/globals.css";
+import "~/styles/markdown.css";
 
 export const fetcher = (url: string) => fetch(url).then((r) => r.json());
 

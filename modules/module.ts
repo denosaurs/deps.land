@@ -5,6 +5,7 @@ import {
   getVersionMeta,
   getModules,
   SearchResult,
+  getSourceURL,
 } from "./x";
 import { getNestModule, ModuleNest } from "./nest";
 
@@ -33,6 +34,9 @@ export class Module {
       version,
     };
   }
+  static async version(name: string): Promise<VersionInfo | null> {
+    return await getVersionList(name);
+  }
 
   static async meta(name: string, version: string): Promise<ModuleMeta | null> {
     const data = await getVersionMeta(name, version);
@@ -40,6 +44,26 @@ export class Module {
     return {
       info: data,
     };
+  }
+
+  static async source(
+    name: string,
+    version: string,
+    path: string
+  ): Promise<string | null> {
+    const url = getSourceURL(name, version, path);
+    const res = await fetch(url);
+    if (res.status === 403 || res.status === 404) return null;
+    if (res.status !== 200) {
+      throw Error(
+        `Got an error (${
+          res.status
+        }) while getting the soruce file:\n${await res.text()}`
+      );
+    }
+    const source = await res.text();
+    if (!source) return null;
+    return source;
   }
 
   static async nest(name: string): Promise<ModuleNest | null> {
