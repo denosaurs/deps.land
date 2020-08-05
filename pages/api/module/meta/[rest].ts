@@ -1,19 +1,17 @@
 import type { NextApiHandler } from "next";
+
 import { Module } from "../../../../modules/module";
+import { parseNameVersion } from "../../../../modules/x";
 
 const handler: NextApiHandler = async (req, res) => {
   res.setHeader("Content-Type", "application/json");
 
-  let { module = "std" } = req.query;
-  if (Array.isArray(module)) module = module.join("");
+  let { rest = "std" } = req.query;
+  if (Array.isArray(rest)) rest = rest.join("");
 
-  let version = undefined;
-  if (module.includes("@")) {
-    const split = module.split("@");
-    module = split[0];
-    version = split[1];
-  } else {
-    const info = await Module.version(module);
+  let [name, version] = parseNameVersion(rest);
+  if (!version) {
+    const info = await Module.version(name);
     if (!info) {
       res.status(404).json({ message: "Module not found." });
       return;
@@ -21,7 +19,7 @@ const handler: NextApiHandler = async (req, res) => {
     version = info.latest;
   }
 
-  let mod = await Module.meta(module, version);
+  let mod = await Module.meta(name, version);
 
   if (!mod) {
     res.status(404).json({ message: "Module not found." });

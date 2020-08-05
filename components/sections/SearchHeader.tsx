@@ -5,7 +5,7 @@ import useSWR from "swr";
 import clsx from "clsx";
 
 import { fetcher } from "~/pages/_app";
-import { HeaderLinks } from "~/components/Header";
+import { HeaderLinks } from "./Header";
 
 const links: HeaderLinks = {
   categories: (
@@ -44,7 +44,7 @@ function SearchHeader({ selected }: SearchHeaderProps) {
         <p>
           Index of {count ? count.number : "~"} deno modules and applications.{" "}
           <Link href="/about">
-            <a className="hover:underline text-blue-500">More...</a>
+            <a className="link">More...</a>
           </Link>
         </p>
         <form>

@@ -33,10 +33,8 @@ function CategoryBox({ category, title, description }: CategoryBoxProps) {
             .map((value, index) => {
               return (
                 <li className="inline" key={index}>
-                  <Link href="/module/[module]" as={`/module/${value.name}`}>
-                    <a className="hover:underline text-blue-500">
-                      {value.name}
-                    </a>
+                  <Link href="/x/[module]" as={`/x/${value.name}`}>
+                    <a className="link">{value.name}</a>
                   </Link>
                 </li>
               );

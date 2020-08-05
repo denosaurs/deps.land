@@ -13,7 +13,6 @@ export interface ModuleInfo {
   name: string;
   description: string;
   stars: number;
-  version: VersionInfo;
 }
 
 export interface ModuleMeta {
@@ -22,18 +21,17 @@ export interface ModuleMeta {
 
 export class Module {
   static async info(name: string): Promise<ModuleInfo | null> {
-    const version = await getVersionList(name);
     const res = await getModules(1, 2, name);
-    if (!version || !res || res.results.length === 0) return null;
+    if (!res || res.results.length === 0) return null;
     const mod = res.results.find((r) => r.name === name);
     if (!mod) return null;
     return {
       name,
       description: mod.description,
       stars: Number(mod.star_count),
-      version,
     };
   }
+
   static async version(name: string): Promise<VersionInfo | null> {
     return await getVersionList(name);
   }

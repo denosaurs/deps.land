@@ -1,20 +1,17 @@
 import type { NextApiHandler } from "next";
+
 import { Module } from "../../../../modules/module";
+import { parseNameVersion } from "../../../../modules/x";
 
 const handler: NextApiHandler = async (req, res) => {
   res.setHeader("Content-Type", "application/json");
 
-  let { module = "std" } = req.query;
-  if (Array.isArray(module)) module = module.join("");
+  let { rest = "std" } = req.query;
+  if (Array.isArray(rest)) rest = rest.join("");
 
-  let version = undefined;
-  if (module.includes("@")) {
-    const split = module.split("@");
-    module = split[0];
-    version = split[1];
-  }
+  const [name, version] = parseNameVersion(rest);
 
-  let nest = await Module.nest(module);
+  let nest = await Module.nest(name);
 
   res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate");
   res.status(200).json({ nest });

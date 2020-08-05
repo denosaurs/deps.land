@@ -8,3 +8,5 @@ declare module "*.svg" {
   const value: SvgrComponent;
   export default value;
 }
+
+type Children = JSX.Element | string | (JSX.Element | string)[];
