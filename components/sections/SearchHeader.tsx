@@ -52,7 +52,7 @@ function SearchHeader({ selected, links }: SearchHeaderProps) {
               return (
                 <div
                   key={index}
-                  className={clsx("px-4 py-1 mt-2 mr-2", {
+                  className={clsx("px-4 py-1 mt-2 mr-1", {
                     "bg-white dark:bg-gray-900": isSelected,
                     "bg-gray-200 dark:bg-gray-800": !isSelected,
                   })}

@@ -74,17 +74,17 @@ function Module() {
       </Link>
     );
 
-    links["deno.land"] = <a href={`https://deno.land/x/${id}`}>deno.land/x/</a>;
+    // links["deno.land"] = <a href={`https://deno.land/x/${id}`}>deno.land</a>;
 
-    if (registries) {
-      if (registries.nest) {
-        links["nest.land"] = (
-          <a href={`https://x.nest.land/${id}`}>x.nest.land</a>
-        );
-      }
-    }
+    // if (registries) {
+    //   if (registries.nest) {
+    //     links["nest.land"] = (
+    //       <a href={`https://x.nest.land/${id}`}>nest.land</a>
+    //     );
+    //   }
+    // }
 
-    if (meta) {
+    if (meta?.info?.uploadOptions) {
       const repo = meta.info.uploadOptions.repository;
       links["github"] = <a href={`https://github.com/${repo}`}>GitHub</a>;
     }
