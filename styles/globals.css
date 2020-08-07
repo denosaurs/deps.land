@@ -21,6 +21,14 @@
   display: inline;
 }
 
+.justify {
+  @apply text-justify;
+  text-align: justify;
+  text-align: justify-all;
+  -moz-text-align-last: justify;
+  text-align-last: justify;
+}
+
 .link {
   @apply text-blue-500;
   @apply transition;

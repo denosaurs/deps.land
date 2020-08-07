@@ -19,6 +19,10 @@ export interface ModuleMeta {
   info: VersionMetaInfo;
 }
 
+export interface ModuleRegistries {
+  nest: ModuleNest;
+}
+
 export class Module {
   static async info(name: string): Promise<ModuleInfo | null> {
     const res = await getModules(1, 2, name);

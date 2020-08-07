@@ -108,7 +108,7 @@
   @apply font-normal;
   @apply font-mono;
   @apply shadow;
-  @apply py-1;
+  @apply py-0.5;
 }
 
 .markdown table {

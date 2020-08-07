@@ -17,14 +17,15 @@
     ]
   },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "node index/setup.js && next dev",
+    "build": "node index/setup.js && next build",
     "start": "next start",
     "lint": "prettier --write **/*"
   },
   "dependencies": {
     "clsx": "^1.1.1",
     "gray-matter": "^4.0.2",
+    "isomorphic-git": "^1.7.4",
     "next": "9.5.1",
     "prism-react-renderer": "^1.1.1",
     "prismjs": "^1.20.0",
@@ -39,7 +40,6 @@
     "@types/node": "^14.0.27",
     "@types/react": "^16.9.44",
     "autoprefixer": "^9.8.0",
-    "babel-plugin-root-import": "^6.5.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "postcss-import": "^12.0.1",

@@ -8,8 +8,7 @@ import Layout from "~/components/layout/Layout";
 import Main from "~/components/sections/Main";
 import Markdown from "~/components/markdown/Markdown";
 
-import { ModuleInfo, ModuleMeta } from "~/modules/module";
-import { ModuleNest } from "~/modules/nest";
+import { ModuleInfo, ModuleMeta, ModuleRegistries } from "~/modules/module";
 import { fetcher } from "~/pages/_app";
 import { useMemo, useEffect } from "react";
 import { parseNameVersion, getSourceURL, VersionInfo } from "~/modules/x";
@@ -45,7 +44,7 @@ function Module() {
     name ? `/api/module/info/${name}` : null,
     fetcher
   );
-  const { data: nest } = useSWR<ModuleNest>(
+  const { data: registries } = useSWR<ModuleRegistries>(
     name ? `/api/module/registries/${name}` : null,
     fetcher
   );
@@ -75,6 +74,16 @@ function Module() {
       </Link>
     );
 
+    links["deno.land"] = <a href={`https://deno.land/x/${id}`}>deno.land/x/</a>;
+
+    if (registries) {
+      if (registries.nest) {
+        links["nest.land"] = (
+          <a href={`https://x.nest.land/${id}`}>x.nest.land</a>
+        );
+      }
+    }
+
     if (meta) {
       const repo = meta.info.uploadOptions.repository;
       links["github"] = <a href={`https://github.com/${repo}`}>GitHub</a>;
@@ -86,8 +95,39 @@ function Module() {
       <Head>
         <title>{name} — land of the Deno modules // deps.land</title>
       </Head>
-      <Header selected={name} links={links} />
+      <Header selected={name} links={links} arrow="module">
+        <div className="py-4">
+          <h1>
+            <span className="text-6xl font-bold">{name}</span>
+            <span></span> {version}
+          </h1>
+          <p className="text-gray-500">{info && info.description}</p>
+        </div>
+      </Header>
       <Main>
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 col-gap-4 row-gap-8">
+          <div>
+            <h4 className="font-bold text-gray-400">
+              {versionInfo && versionInfo.versions.length} releases:
+            </h4>
+            <table className="border-collapse">
+              <tbody>
+                <tr>
+                  <th className="pr-2 text-right font-medium">1.12.2</th>
+                  <td className="justify text-gray-500">x, nest</td>
+                </tr>
+                <tr>
+                  <th className="pr-2 text-right font-medium">1.12.1</th>
+                  <td className="justify text-gray-500">x</td>
+                </tr>
+                <tr>
+                  <th className="pr-2 text-right font-medium">1.12.0</th>
+                  <td className="justify text-gray-500">x</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
         {readme ? (
           <Markdown
             source={readme.source}

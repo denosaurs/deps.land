@@ -7,29 +7,12 @@ import clsx from "clsx";
 import { fetcher } from "~/pages/_app";
 import { HeaderLinks } from "./Header";
 
-const links: HeaderLinks = {
-  categories: (
-    <Link href="/">
-      <a>Categories</a>
-    </Link>
-  ),
-  popular: (
-    <Link href="/popular">
-      <a>Popular</a>
-    </Link>
-  ),
-  new: (
-    <Link href="/new">
-      <a>New</a>
-    </Link>
-  ),
-};
-
 interface SearchHeaderProps {
-  selected: keyof typeof links;
+  selected: string;
+  links?: HeaderLinks;
 }
 
-function SearchHeader({ selected }: SearchHeaderProps) {
+function SearchHeader({ selected, links }: SearchHeaderProps) {
   const { data: count } = useSWR(`/api/count`, fetcher);
 
   return (
@@ -63,22 +46,23 @@ function SearchHeader({ selected }: SearchHeaderProps) {
           </div>
         </form>
         <nav className="flex flex-row">
-          {Object.entries(links).map(([name, link], index) => {
-            const isSelected = name === selected;
-            return (
-              <div
-                key={index}
-                className={clsx("px-4 py-1 mt-2 mr-2", {
-                  "bg-white dark:bg-gray-900": isSelected,
-                  "bg-gray-200 dark:bg-gray-800": !isSelected,
-                })}
-              >
-                <div className="text-center text-md hover:underline">
-                  {link}
+          {links &&
+            Object.entries(links).map(([name, link], index) => {
+              const isSelected = name === selected;
+              return (
+                <div
+                  key={index}
+                  className={clsx("px-4 py-1 mt-2 mr-2", {
+                    "bg-white dark:bg-gray-900": isSelected,
+                    "bg-gray-200 dark:bg-gray-800": !isSelected,
+                  })}
+                >
+                  <div className="text-center text-md hover:underline">
+                    {link}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </nav>
       </div>
     </header>

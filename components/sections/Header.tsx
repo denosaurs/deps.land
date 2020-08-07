@@ -4,26 +4,28 @@ import Link from "next/link";
 import clsx from "clsx";
 
 export type HeaderLinks = {
-  [key: string]: JSX.Element;
+  [key: string]: JSX.Element | unknown;
 };
 
 interface HeaderProps {
   selected: string;
   links: HeaderLinks;
+  arrow?: string;
+  children?: Children;
 }
 
-function Header({ selected, links }: HeaderProps) {
+function Header({ selected, links, arrow, children }: HeaderProps) {
   return (
     <header className="px-4 pt-4 bg-gray-200 dark:bg-gray-800">
       <div className="container max-w-6xl mx-auto px-4">
-        <h1 className="text-2xl">
+        <h1>
           <Link href="/">
-            <a className="hover:underline font-bold mr-2 text-3xl">Deps.land</a>
+            <a className="hover:underline font-bold mr-2 text-xlg">Deps.land</a>
           </Link>
-          {selected !== "categories" && <span>› {selected}</span>}
+          <span className="text-lg">{arrow && <span>› {arrow}</span>}</span>
         </h1>
-        <div>{/* maybe children? */}</div>
-        <nav className="flex flex-row">
+        <div>{children}</div>
+        <nav className="mt-2 flex flex-row">
           {Object.entries(links).map(([name, link], index) => {
             const isSelected = name === selected;
             return (

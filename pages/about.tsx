@@ -22,7 +22,7 @@ function About() {
       <Head>
         <title>deps.land — land of the Deno modules // deps.land</title>
       </Head>
-      <Header selected="about" links={links} />
+      <Header selected="about" links={links} arrow="about" />
       <Main>
         <section className="container max-w-6xl mx-auto p-4"></section>
       </Main>

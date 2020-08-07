@@ -2,3 +2,4 @@
 yarn.lock
 public
 .prettierignore
+.gitignore
