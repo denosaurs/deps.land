@@ -8,7 +8,7 @@ function Footer() {
       <div className="container max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between">
           <p>&copy; {new Date().getUTCFullYear()} Denosaurs team</p>
-          <a href="https://vercel.com?utm_source=deps-land">
+          <a href="https://vercel.com?utm_source=deps">
             <h1 className="flex items-center">
               Powered by{" "}
               <VercelLogo className="ml-2 fill-current dark:text-white h-8" />

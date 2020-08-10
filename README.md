@@ -10,7 +10,7 @@
 </div>
 
  <p align="center">
-  <a href="https://vercel.com?utm_source=deps-land">
+  <a href="https://vercel.com?utm_source=deps">
     <img src="./public/images/vercel/powered_by_vercel.jpg" alt="Powered by Vercel" width="200">
   </a>
 </p>
