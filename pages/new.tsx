@@ -7,6 +7,7 @@ import SearchHeader from "~/components/sections/SearchHeader";
 import CategoryBox from "~/components/category/CategoryBox";
 import Layout from "~/components/layout/Layout";
 import Main from "~/components/sections/Main";
+import { info, IndexInfo } from "~/index/registry";
 
 const links: HeaderLinks = {
   categories: (
@@ -21,44 +22,48 @@ const links: HeaderLinks = {
   ),
 };
 
-function New() {
+interface NewProps {
+  index: IndexInfo;
+}
+
+export default function New({ index }: NewProps) {
   return (
     <Layout>
       <Head>
         <title>deps.land — land of the Deno modules // deps.land</title>
       </Head>
-      <SearchHeader selected="new" links={links} />
+      <SearchHeader selected="new" links={links} index={index} />
       <Main>
         <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 col-gap-4 row-gap-8">
           <CategoryBox
             category="discord"
             title="Discord Libraries"
-            description="Interact with the Discord API with ease"
+            description="Create bots and application interacting with the Discord API"
           />
           <CategoryBox
             category="command line"
-            title="Command Line Frameworks"
-            description="Interfacing with the Discord API"
+            title="Command-line interface"
+            description="Argument parsers, line editing, or output coloring and formatting"
           />
           <CategoryBox
             category="http server"
-            title="Server Frameworks"
-            description="Interfacing with the Discord API"
+            title="HTTP Frameworks"
+            description="Serve data over HTTP"
           />
           <CategoryBox
             category="web framework"
             title="Web Frameworks"
-            description="Interfacing with the Discord API"
+            description="Create applications for the web"
           />
           <CategoryBox
             category="plugin"
             title="Plugins"
-            description="Interfacing with the Discord API"
+            description="Interact with deno native rust plugins"
           />
           <CategoryBox
             category="monitor changes"
             title="File Watchers"
-            description="Interfacing with the Discord API"
+            description="Monitor changes in your development environment"
           />
         </div>
       </Main>
@@ -66,4 +71,11 @@ function New() {
   );
 }
 
-export default New;
+export async function getStaticProps() {
+  const index = info();
+  return {
+    props: {
+      index,
+    },
+  };
+}

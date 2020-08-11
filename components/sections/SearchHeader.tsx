@@ -1,20 +1,19 @@
 import * as React from "react";
 
 import Link from "next/link";
-import useSWR from "swr";
 import clsx from "clsx";
 
 import { fetcher } from "~/pages/_app";
 import { HeaderLinks } from "./Header";
+import { IndexInfo } from "~/index/registry";
 
 interface SearchHeaderProps {
   selected: string;
   links?: HeaderLinks;
+  index?: IndexInfo;
 }
 
-function SearchHeader({ selected, links }: SearchHeaderProps) {
-  const { data: count } = useSWR(`/api/count`, fetcher);
-
+function SearchHeader({ selected, links, index }: SearchHeaderProps) {
   return (
     <header className="px-4 pt-4 bg-gray-200 dark:bg-gray-800">
       <div className="container max-w-6xl mx-auto px-4">
@@ -25,7 +24,7 @@ function SearchHeader({ selected, links }: SearchHeaderProps) {
           {selected !== "categories" && <span>› {selected}</span>}
         </h1>
         <p>
-          Index of {count ? count.number : "~"} deno modules and applications.{" "}
+          Index of {index ? index.total : "~"} deno modules and applications.{" "}
           <Link href="/about">
             <a className="link">More...</a>
           </Link>

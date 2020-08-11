@@ -7,7 +7,9 @@ module.exports = {
       },
       use: ["@svgr/webpack"],
     });
-
     return config;
+  },
+  env: {
+    DEBUG: "*",
   },
 };

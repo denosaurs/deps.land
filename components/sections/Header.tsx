@@ -22,7 +22,7 @@ function Header({ selected, links, arrow, children }: HeaderProps) {
           <Link href="/">
             <a className="hover:underline font-bold mr-2 text-xlg">Deps.land</a>
           </Link>
-          <span className="text-lg">{arrow && <span>› {arrow}</span>}</span>
+          <span className="text-md">{arrow && <span>› {arrow}</span>}</span>
         </h1>
         <div>{children}</div>
         <nav className="mt-2 flex flex-row">

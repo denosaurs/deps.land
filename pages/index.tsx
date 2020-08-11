@@ -7,6 +7,7 @@ import SearchHeader from "~/components/sections/SearchHeader";
 import CategoryBox from "~/components/category/CategoryBox";
 import Layout from "~/components/layout/Layout";
 import Main from "~/components/sections/Main";
+import { IndexInfo, info } from "~/index/registry";
 
 const links: HeaderLinks = {
   categories: (
@@ -21,13 +22,17 @@ const links: HeaderLinks = {
   ),
 };
 
-function Index() {
+interface IndexProps {
+  index: IndexInfo;
+}
+
+export default function Index({ index }: IndexProps) {
   return (
     <Layout>
       <Head>
         <title>deps.land — land of the Deno modules // deps.land</title>
       </Head>
-      <SearchHeader selected="categories" links={links} />
+      <SearchHeader selected="categories" links={links} index={index} />
       <Main>
         <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 col-gap-4 row-gap-8">
           <CategoryBox
@@ -66,4 +71,11 @@ function Index() {
   );
 }
 
-export default Index;
+export async function getStaticProps() {
+  const index = info();
+  return {
+    props: {
+      index,
+    },
+  };
+}

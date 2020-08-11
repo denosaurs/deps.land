@@ -1,6 +1,8 @@
 .next
 yarn.lock
 public
+public/icons
+public/images
 .prettierignore
 .gitignore
 deps.index

@@ -95,7 +95,7 @@ function Module() {
       <Head>
         <title>{name} — land of the Deno modules // deps.land</title>
       </Head>
-      <Header selected={name} links={links} arrow="module">
+      <Header selected={name} links={links} arrow={name}>
         <div className="py-4">
           <h1>
             <span className="text-6xl font-bold">{name}</span>
