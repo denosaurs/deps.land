@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useCallback, useState } from "react";
 
 import Link from "next/link";
 import clsx from "clsx";
@@ -14,6 +14,18 @@ interface SearchHeaderProps {
 }
 
 function SearchHeader({ selected, links, index }: SearchHeaderProps) {
+  const [query, setQuery] = useState("");
+  const onSearchChange = useCallback(
+    (event) => {
+      setQuery(event.target.value);
+    },
+    [query]
+  );
+
+  const onSearchClick = useCallback(() => {
+    console.log(query);
+  }, [query]);
+
   return (
     <header className="px-4 pt-4 bg-gray-200 dark:bg-gray-800">
       <div className="container max-w-6xl mx-auto px-4">
@@ -29,21 +41,23 @@ function SearchHeader({ selected, links, index }: SearchHeaderProps) {
             <a className="link">More...</a>
           </Link>
         </p>
-        <form>
-          <div className="py-3">
-            <div className="inline-flex w-full">
-              <input
-                className="bg-gray-300 dark:bg-gray-700 font-medium py-2 px-4 rounded-l w-72"
-                id="search"
-                type="text"
-                placeholder="name, keyword, ..."
-              />
-              <button className="bg-gray-400 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
-                Search
-              </button>
-            </div>
+        <div className="py-3 hidden xs:block">
+          <div className="inline-flex w-full">
+            <input
+              className="bg-gray-300 dark:bg-gray-700 font-medium py-2 px-4 rounded-l rounded-r-none w-72"
+              id="search"
+              type="text"
+              placeholder="name, keyword, ..."
+              onChange={onSearchChange}
+            />
+            <button
+              className="bg-gray-400 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l-none rounded-r"
+              onClick={onSearchClick}
+            >
+              Search
+            </button>
           </div>
-        </form>
+        </div>
         <nav className="flex flex-row">
           {links &&
             Object.entries(links).map(([name, link], index) => {

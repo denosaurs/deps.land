@@ -16,6 +16,7 @@ module.exports = {
     extend: {
       screens: {
         dark: { raw: "(prefers-color-scheme: dark)" },
+        xs: "370px",
       },
       colors: {
         "gray-950": "#131720",

@@ -17,9 +17,6 @@ async function main() {
       http,
       dir,
       url: INDEX_REPO,
-      onMessage: (msg) => {
-        msg && log("git: %s", msg);
-      },
     });
     log("cloning done!");
   } else {
@@ -30,9 +27,6 @@ async function main() {
       dir,
       singleBranch: true,
       author: AUTHOR,
-      onMessage: (msg) => {
-        msg && log("git: %s", msg);
-      },
     });
     log("updating done!");
   }
