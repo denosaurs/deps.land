@@ -51,7 +51,6 @@ export const RawCodeBlock = ({
   return (
     <Highlight
       Prism={Prism}
-      theme={theme}
       code={code}
       // @ts-ignore
       language={

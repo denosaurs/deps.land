@@ -1,0 +1,152 @@
+code[class*="language-"],
+pre[class*="language-"] {
+  word-spacing: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  tab-size: 2;
+  hyphens: none;
+  @apply break-normal whitespace-pre text-left bg-none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  margin: 0.5em 0;
+  @apply overflow-auto rounded-md p-3 my-2;
+}
+
+@media (prefers-color-scheme: dark) {
+  :not(pre) > code[class*="language-"],
+  pre[class*="language-"] {
+    text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+    @apply text-gray-200;
+    @apply bg-gray-950;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :not(pre) > code[class*="language-"],
+  pre[class*="language-"] {
+    text-shadow: 0 1px rgba(255, 255, 255, 0.3);
+    @apply text-gray-950;
+    @apply bg-gray-100;
+  }
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  @apply whitespace-normal rounded-md p-1;
+}
+
+@media (prefers-color-scheme: dark) {
+  .token.comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    @apply text-gray-600;
+  }
+
+  .token.punctuation {
+    @apply text-gray-200;
+  }
+
+  .token.operator,
+  .token.entity,
+  .token.url,
+  .language-css .token.string,
+  .style .token.string,
+  .token.variable {
+    @apply text-gray-200;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .token.comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    @apply text-gray-400;
+  }
+
+  .token.punctuation {
+    @apply text-gray-800;
+  }
+
+  .token.operator,
+  .token.entity,
+  .token.url,
+  .language-css .token.string,
+  .style .token.string,
+  .token.variable {
+    @apply text-gray-800;
+  }
+}
+
+.token.namespace {
+  @apply opacity-75;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  @apply text-red-500;
+}
+
+.token.boolean,
+.token.number {
+  @apply text-purple-500;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  @apply text-green-500;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+  @apply text-yellow-400;
+}
+
+.token.keyword {
+  @apply text-blue-400;
+}
+
+.token.regex,
+.token.important {
+  @apply text-orange-400;
+}
+
+.token.important,
+.token.bold {
+  @apply font-bold;
+}
+.token.italic {
+  @apply italic;
+}
+
+.token.deleted:not(.prefix) {
+  @apply bg-red-700 bg-opacity-25 block;
+}
+
+.token.inserted:not(.prefix) {
+  @apply bg-green-700 bg-opacity-25 block;
+}
+
+.code-title + pre {
+  @apply mt-0;
+}
+
+.code-title {
+  @apply select-none mb-0 mt-2 z-10;
+}
+
+.code-title span {
+  @apply bg-gray-950 text-gray-200 py-2 px-3 rounded-t-md font-mono;
+}

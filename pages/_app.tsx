@@ -1,5 +1,6 @@
-import "~/styles/globals.css";
-import "~/styles/markdown.css";
+import React from "react";
+
+import "~/styles/globals.scss";
 
 export const fetcher = (url: string) => fetch(url).then((r) => r.json());
 

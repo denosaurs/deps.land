@@ -24,20 +24,10 @@
     "lint": "prettier --write **/*"
   },
   "dependencies": {
-    "clsx": "^1.1.1",
-    "debug": "^4.1.1",
-    "glob": "^7.1.6",
-    "gray-matter": "^4.0.2",
-    "isomorphic-git": "^1.7.4",
-    "mem": "^6.1.0",
     "next": "9.5.1",
-    "prism-react-renderer": "^1.1.1",
-    "prismjs": "^1.20.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-markdown": "^4.3.1",
-    "swr": "^0.3.0",
-    "tailwindcss": "^1.4.6"
+    "react-markdown": "^4.3.1"
   },
   "devDependencies": {
     "@svgr/webpack": "^5.4.0",
@@ -46,11 +36,21 @@
     "@types/node": "^14.0.27",
     "@types/react": "^16.9.44",
     "autoprefixer": "^9.8.0",
+    "clsx": "^1.1.1",
+    "debug": "^4.1.1",
+    "glob": "^7.1.6",
     "husky": "^4.2.5",
+    "isomorphic-git": "^1.7.4",
     "jest": "^26.3.0",
     "lint-staged": "^10.2.11",
+    "mem": "^6.1.0",
     "postcss-import": "^12.0.1",
     "prettier": "^2.0.5",
+    "prism-react-renderer": "^1.1.1",
+    "prismjs": "^1.21.0",
+    "sass": "^1.26.10",
+    "swr": "^0.3.1",
+    "tailwindcss": "^1.7.3",
     "ts-jest": "^26.2.0",
     "typescript": "^3.9.7"
   }

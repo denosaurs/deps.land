@@ -5,6 +5,9 @@
 
 @import "tailwindcss/utilities";
 
+@import "./markdown.scss";
+@import "./prism.scss";
+
 .modules > li:not(:last-child)::after {
   content: ", ";
 }
@@ -47,9 +50,11 @@ span.token.plain:empty:before {
 ol.nested {
   counter-reset: item;
 }
+
 ol.nested li {
   display: block;
 }
+
 ol.nested li:before {
   font-feature-settings: "kern" 1, "tnum" 1;
   -webkit-font-feature-settings: "kern" 1, "tnum" 1;
@@ -57,15 +62,4 @@ ol.nested li:before {
   -moz-font-feature-settings: "kern" 1, "tnum" 1;
   content: counters(item, ".") ". ";
   counter-increment: item;
-}
-
-.deno-offwhite .deno-inlinecode {
-  @apply bg-gray-200;
-}
-.prism-code {
-  tab-size: 2;
-  -moz-tab-size: 2;
-}
-.highlight-line {
-  background-color: #fffbdd;
 }

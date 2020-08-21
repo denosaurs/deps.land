@@ -1,17 +1,22 @@
-import * as React from "react";
+import React from "react";
 import Head from "next/head";
 
 import SearchHeader from "~/components/sections/SearchHeader";
 import Layout from "~/components/layout/Layout";
 import Main from "~/components/sections/Main";
+import { info, IndexInfo } from "~/index/registry";
 
-function Index() {
+interface IndexProps {
+  index: IndexInfo;
+}
+
+function Error404({ index }: IndexProps) {
   return (
     <Layout>
       <Head>
         <title>deps.land — land of the Deno modules // deps.land</title>
       </Head>
-      <SearchHeader selected="categories" />
+      <SearchHeader selected="categories" index={index} />
       <Main>
         <div className="m-auto text-center">
           <h1 className="text-6xl font-bold">Not found</h1>
@@ -22,4 +27,13 @@ function Index() {
   );
 }
 
-export default Index;
+export async function getStaticProps() {
+  const index = info();
+  return {
+    props: {
+      index,
+    },
+  };
+}
+
+export default Error404;
