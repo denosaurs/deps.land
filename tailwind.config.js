@@ -4,6 +4,12 @@ module.exports = {
   future: {
     removeDeprecatedGapUtilities: true,
   },
+  purge: {
+    content: ["./components/**/*.tsx", "./pages/**/*.tsx"],
+    options: {
+      whitelist: [],
+    },
+  },
   theme: {
     fontFamily: {
       mono: [
@@ -35,5 +41,4 @@ module.exports = {
       },
     },
   },
-  purge: false,
 };
