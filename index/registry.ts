@@ -1,11 +1,11 @@
 import fs from "fs";
 import path from "path";
 import glob from "glob";
-import mem from "mem";
+import readline from "readline";
 
 export const INDEX = path.join(process.cwd(), "deps.index");
 
-function registriesMem(): string[] {
+export function registries(): string[] {
   return fs
     .readdirSync(INDEX, { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
@@ -13,10 +13,25 @@ function registriesMem(): string[] {
     .filter((dirent) => !dirent.startsWith("."));
 }
 
-export const registries = mem(registriesMem);
+export interface VersionInfo {
+  name: string;
+  desc: string;
+  repo: string;
+  vers: string;
+}
 
-export function mod(registry: string, name: string): string | null {
-  let rel;
+export interface ModuleInfo {
+  latest: string;
+  versions: {
+    [key: string]: VersionInfo;
+  };
+}
+
+export async function module(
+  registry: string,
+  name: string
+): Promise<ModuleInfo | null> {
+  let rel: string;
   switch (name.length) {
     case 0:
       return null;
@@ -34,11 +49,30 @@ export function mod(registry: string, name: string): string | null {
   }
   rel = path.join(registry, rel, name);
   const mod = path.join(INDEX, rel);
+
   if (!fs.existsSync(mod)) return null;
-  return mod;
+
+  try {
+    const stream = fs.createReadStream(mod);
+    const rl = readline.createInterface({
+      input: stream,
+      crlfDelay: Infinity,
+    });
+
+    const versions: VersionInfo[] = [];
+    for await (const line of rl) {
+      versions.push(JSON.parse(line));
+    }
+    return {
+      latest: versions.slice(-1)[0].vers,
+      versions: Object.fromEntries(versions.map((mod) => [mod.vers, mod])),
+    };
+  } catch {
+    return null;
+  }
 }
 
-function modsMem(registry: string): string[] {
+export function modules(registry: string): string[] {
   const pt1 = `${registry}/*/*/*`;
   const pt2 = `${registry}/[12]/*`;
   let ar1 = glob.sync(pt1, { cwd: INDEX, dot: false, realpath: true });
@@ -46,28 +80,30 @@ function modsMem(registry: string): string[] {
   return [...ar1, ...ar2];
 }
 
-export const mods = mem(modsMem);
-
-function allMem(): string[] {
+export function all(): string[] {
   let res = [];
   for (let reg of registries()) {
-    res = [...res, ...mods(reg)];
+    res = [...res, ...modules(reg)];
   }
   return res;
 }
-
-export const all = mem(allMem);
 
 export interface IndexInfo {
   total: number;
   registries: string[];
 }
 
-function infoMem(): IndexInfo {
+export function info(): IndexInfo {
   return {
     total: all().length,
     registries: registries(),
   };
 }
 
-export const info = mem(infoMem);
+export default {
+  registries,
+  module,
+  modules,
+  all,
+  info,
+};

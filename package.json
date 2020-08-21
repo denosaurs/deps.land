@@ -12,7 +12,7 @@
     }
   },
   "lint-staged": {
-    "**/*": [
+    "*": [
       "prettier --write"
     ]
   },
@@ -21,7 +21,7 @@
     "dev": "yarn setup && next dev",
     "build": "yarn setup && next build",
     "start": "next start",
-    "lint": "prettier --write **/*"
+    "lint": "prettier --write"
   },
   "dependencies": {
     "next": "9.5.1",
@@ -43,7 +43,6 @@
     "isomorphic-git": "^1.7.4",
     "jest": "^26.3.0",
     "lint-staged": "^10.2.11",
-    "mem": "^6.1.0",
     "postcss-import": "^12.0.1",
     "prettier": "^2.0.5",
     "prism-react-renderer": "^1.1.1",

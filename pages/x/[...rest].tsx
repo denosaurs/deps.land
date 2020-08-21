@@ -1,27 +1,38 @@
-import { useRouter } from "next/router";
-import useSWR from "swr";
 import Head from "next/head";
 import Link from "next/link";
+import DefaultErrorPage from "next/error";
+import { useRouter } from "next/router";
+
+import useSWR from "swr";
 
 import Header, { HeaderLinks } from "~/components/sections/Header";
 import Layout from "~/components/layout/Layout";
 import Main from "~/components/sections/Main";
 import Markdown from "~/components/markdown/Markdown";
 
-import { ModuleInfo, ModuleMeta, ModuleRegistries } from "~/modules/module";
 import { fetcher } from "~/pages/_app";
 import { useMemo, useEffect } from "react";
-import { parseNameVersion, getSourceURL, VersionInfo } from "~/modules/x";
+import { parseNameVersion, getSourceURL } from "~/modules/x";
+import index, { ModuleInfo, VersionInfo } from "~/index/registry";
 
-function Module() {
+interface ModuleProps {
+  found: boolean;
+  path: string;
+  name: string;
+  version: string;
+  id: string;
+  mod: ModuleInfo;
+  info: VersionInfo;
+}
+
+function Module({ found, name, version, path, id, mod, info }: ModuleProps) {
   const router = useRouter();
 
-  const { name, version, path, id } = useMemo(() => {
-    const [identifier, ...pathParts] = (router.query.rest as string[]) ?? [];
-    const path = pathParts.length === 0 ? "" : `/${pathParts.join("/")}`;
-    const [name, version] = parseNameVersion(identifier ?? "");
-    return { name, version, path, id: `${name}@${version}` };
-  }, [router.query]);
+  useEffect(() => {
+    if (!version && mod) {
+      gotoVersion(mod.latest, true);
+    }
+  }, [version, mod]);
 
   function gotoVersion(v: string, replace?: boolean) {
     const href = "/x/[...rest]";
@@ -30,24 +41,17 @@ function Module() {
     replace ? router.replace(href, as) : router.push(href, as);
   }
 
-  const { data: versionInfo } = useSWR<VersionInfo>(
-    name ? `/api/module/version/${name}` : null,
-    fetcher
-  );
+  if (!found && !router.isFallback) {
+    return (
+      <>
+        <Head>
+          <meta name="robots" content="noindex" />
+        </Head>
+        <DefaultErrorPage statusCode={404} />
+      </>
+    );
+  }
 
-  const { data: meta } = useSWR<ModuleMeta>(
-    name ? `/api/module/meta/${name}` : null,
-    fetcher
-  );
-
-  const { data: info } = useSWR<ModuleInfo>(
-    name ? `/api/module/info/${name}` : null,
-    fetcher
-  );
-  const { data: registries } = useSWR<ModuleRegistries>(
-    name ? `/api/module/registries/${name}` : null,
-    fetcher
-  );
   const { data: readme } = useSWR(
     name ? `/api/module/source/${name}/README.md` : null,
     fetcher
@@ -60,12 +64,6 @@ function Module() {
     path,
   ]);
 
-  useEffect(() => {
-    if (!version && versionInfo && versionInfo.latest) {
-      gotoVersion(versionInfo.latest, true);
-    }
-  }, [versionInfo, version]);
-
   const links: HeaderLinks = {};
   if (name) {
     links[name] = (
@@ -74,20 +72,7 @@ function Module() {
       </Link>
     );
 
-    // links["deno.land"] = <a href={`https://deno.land/x/${id}`}>deno.land</a>;
-
-    // if (registries) {
-    //   if (registries.nest) {
-    //     links["nest.land"] = (
-    //       <a href={`https://x.nest.land/${id}`}>nest.land</a>
-    //     );
-    //   }
-    // }
-
-    if (meta?.info?.uploadOptions) {
-      const repo = meta.info.uploadOptions.repository;
-      links["github"] = <a href={`https://github.com/${repo}`}>GitHub</a>;
-    }
+    links["github"] = <a href={`https://github.com/${info.repo}`}>GitHub</a>;
   }
 
   return (
@@ -101,7 +86,7 @@ function Module() {
             <span className="text-6xl font-bold">{name}</span>
             <span></span> {version}
           </h1>
-          <p className="text-gray-500">{info && info.description}</p>
+          <p className="text-gray-500">{info && info.desc}</p>
         </div>
       </Header>
       <Main>
@@ -117,6 +102,39 @@ function Module() {
       </Main>
     </Layout>
   );
+}
+
+export async function getStaticPaths() {
+  return { paths: [], fallback: true };
+}
+
+export async function getStaticProps({ params }) {
+  const [identifier, ...pathParts] = (params.rest as string[]) ?? [];
+  const path = pathParts.length === 0 ? "" : `/${pathParts.join("/")}`;
+
+  let [name, version] = parseNameVersion(identifier ?? "");
+
+  const mod = await index.module("x", name);
+  if (!mod) return { props: { found: false } };
+
+  let info = mod.versions[version ?? mod.latest];
+  version = version ?? null;
+
+  if (!info) return { props: { found: false } };
+
+  const id = `${name}@${version}`;
+
+  return {
+    props: {
+      found: true,
+      path,
+      name,
+      version,
+      id,
+      mod,
+      info,
+    },
+  };
 }
 
 export default Module;

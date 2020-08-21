@@ -5,7 +5,7 @@ pre[class*="language-"] {
   line-height: 1.5;
   tab-size: 2;
   hyphens: none;
-  @apply break-normal whitespace-pre text-left bg-none;
+  @apply break-normal whitespace-pre text-left;
 }
 
 /* Code blocks */
@@ -139,6 +139,18 @@ pre[class*="language-"] {
   @apply bg-green-700 bg-opacity-25 block;
 }
 
+@media (prefers-color-scheme: dark) {
+  .code-title span {
+    @apply bg-gray-950 text-gray-200;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .code-title span {
+    @apply bg-gray-100 text-gray-950;
+  }
+}
+
 .code-title + pre {
   @apply mt-0;
 }
@@ -148,5 +160,5 @@ pre[class*="language-"] {
 }
 
 .code-title span {
-  @apply bg-gray-950 text-gray-200 py-2 px-3 rounded-t-md font-mono;
+  @apply py-2 px-3 rounded-t-md font-mono;
 }
