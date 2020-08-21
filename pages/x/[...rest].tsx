@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Link from "next/link";
-import DefaultErrorPage from "next/error";
 import { useRouter } from "next/router";
 
 import useSWR from "swr";
@@ -13,7 +12,8 @@ import Markdown from "~/components/markdown/Markdown";
 import { fetcher } from "~/pages/_app";
 import { useMemo, useEffect } from "react";
 import { parseNameVersion, getSourceURL } from "~/modules/x";
-import index, { ModuleInfo, VersionInfo } from "~/index/registry";
+import index, { ModuleInfo, VersionInfo, IndexInfo } from "~/index/registry";
+import Error from "~/pages/404";
 
 interface ModuleProps {
   found: boolean;
@@ -23,16 +23,31 @@ interface ModuleProps {
   id: string;
   mod: ModuleInfo;
   info: VersionInfo;
+  index: IndexInfo;
 }
 
-function Module({ found, name, version, path, id, mod, info }: ModuleProps) {
+function Module({
+  found,
+  name,
+  version,
+  path,
+  id,
+  mod,
+  info,
+  index,
+}: ModuleProps) {
   const router = useRouter();
 
-  useEffect(() => {
-    if (!version && mod) {
-      gotoVersion(mod.latest, true);
-    }
-  }, [version, mod]);
+  if (!found && !router.isFallback) {
+    return (
+      <>
+        <Head>
+          <meta name="robots" content="noindex" />
+        </Head>
+        <Error index={index} />
+      </>
+    );
+  }
 
   function gotoVersion(v: string, replace?: boolean) {
     const href = "/x/[...rest]";
@@ -41,16 +56,11 @@ function Module({ found, name, version, path, id, mod, info }: ModuleProps) {
     replace ? router.replace(href, as) : router.push(href, as);
   }
 
-  if (!found && !router.isFallback) {
-    return (
-      <>
-        <Head>
-          <meta name="robots" content="noindex" />
-        </Head>
-        <DefaultErrorPage statusCode={404} />
-      </>
-    );
-  }
+  useEffect(() => {
+    if (!version && mod) {
+      gotoVersion(mod.latest, true);
+    }
+  }, [version, mod]);
 
   const { data: readme } = useSWR(
     name ? `/api/module/source/${name}/README.md` : null,
@@ -115,12 +125,12 @@ export async function getStaticProps({ params }) {
   let [name, version] = parseNameVersion(identifier ?? "");
 
   const mod = await index.module("x", name);
-  if (!mod) return { props: { found: false } };
+  if (!mod) return { props: { found: false, index: index.info() } };
 
   let info = mod.versions[version ?? mod.latest];
   version = version ?? null;
 
-  if (!info) return { props: { found: false } };
+  if (!info) return { props: { found: false, index: index.info() } };
 
   const id = `${name}@${version}`;
 

@@ -10,7 +10,7 @@ interface IndexProps {
   index: IndexInfo;
 }
 
-function Error404({ index }: IndexProps) {
+function Error({ index }: IndexProps) {
   return (
     <Layout>
       <Head>
@@ -36,4 +36,4 @@ export async function getStaticProps() {
   };
 }
 
-export default Error404;
+export default Error;
