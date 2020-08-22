@@ -1,9 +1,7 @@
-import { useMemo } from "react";
 import Head from "next/head";
 
 interface MetaProps {
   title: string;
-  dynamic?: boolean;
 }
 
 const HOST = "deps.land";
@@ -12,18 +10,16 @@ const TITLE = `${HOST} - land of the Deno modules`;
 const DESCRIPTION =
   "List of Deno modules and applications that supports all the registries.";
 
-const OG = "https://og.deps.land/";
+const IMAGE = "https://og.deps.land/.png";
 
-export default function Meta({ title, dynamic }: MetaProps) {
-  const image = useMemo(() => {
-    return dynamic ? `${OG}${title}.png` : `${OG}.png`;
-  }, [title, dynamic]);
-
+export default function Meta({ title }: MetaProps) {
   return (
     <Head>
-      <title>
-        {title} - land of the Deno modules // {HOST}
-      </title>
+      {title && (
+        <title>
+          {title} - land of the Deno modules // {HOST}
+        </title>
+      )}
       <meta name="title" content={TITLE} />
       <meta name="description" content={DESCRIPTION} />
 
@@ -31,13 +27,13 @@ export default function Meta({ title, dynamic }: MetaProps) {
       <meta property="og:url" content={URL} />
       <meta property="og:title" content={TITLE} />
       <meta property="og:description" content={DESCRIPTION} />
-      <meta property="og:image" content={image} />
+      <meta property="og:image" content={IMAGE} />
 
       <meta property="twitter:card" content="summary_large_image" />
       <meta property="twitter:url" content={URL} />
       <meta property="twitter:title" content={TITLE} />
       <meta property="twitter:description" content={DESCRIPTION} />
-      <meta property="twitter:image" content={image} />
+      <meta property="twitter:image" content={IMAGE} />
     </Head>
   );
 }

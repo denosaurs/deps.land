@@ -84,7 +84,7 @@ function Module({ found, name, version, path, mod, info, index }: ModuleProps) {
 
   return (
     <Layout>
-      <Meta title={name} dynamic />
+      <Meta title={name} />
       <Header selected={name} links={links} arrow={name}>
         <div className="py-4">
           <h1>
