@@ -69,7 +69,6 @@
     @apply leading-tight;
     @apply text-sm;
     @apply font-semibold;
-    @apply text-gray-600;
     @apply mb-4;
     @apply mt-6;
   }
@@ -77,10 +76,16 @@
   blockquote {
     @apply text-base;
     @apply border-l-4;
-    @apply border-gray-300;
     @apply pl-4;
     @apply pr-4;
-    @apply text-gray-600;
+    @media (prefers-color-scheme: dark) {
+      @apply border-gray-300;
+      @apply text-gray-500;
+    }
+    @media (prefers-color-scheme: light) {
+      @apply border-gray-500;
+      @apply text-gray-600;
+    }
   }
 
   ul {
@@ -110,7 +115,12 @@
 
   table {
     @apply text-base;
-    @apply border-gray-600;
+    @media (prefers-color-scheme: dark) {
+      @apply border-gray-300;
+    }
+    @media (prefers-color-scheme: light) {
+      @apply border-gray-500;
+    }
   }
 
   th {

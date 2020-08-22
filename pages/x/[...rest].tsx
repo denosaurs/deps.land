@@ -20,22 +20,12 @@ interface ModuleProps {
   path: string;
   name: string;
   version: string;
-  id: string;
   mod: ModuleInfo;
   info: VersionInfo;
   index: IndexInfo;
 }
 
-function Module({
-  found,
-  name,
-  version,
-  path,
-  id,
-  mod,
-  info,
-  index,
-}: ModuleProps) {
+function Module({ found, name, version, path, mod, info, index }: ModuleProps) {
   const router = useRouter();
 
   if (!found && !router.isFallback) {
@@ -63,11 +53,17 @@ function Module({
   }, [version, mod]);
 
   const { data: readme } = useSWR(
-    name ? `/api/module/source/${name}/README.md` : null,
+    name && version
+      ? `/api/module/source/${`${name}@${version}`}/README.md`
+      : null,
     fetcher
   );
 
-  const canonicalPath = useMemo(() => `/x/${id}${path}`, [name, version, path]);
+  const canonicalPath = useMemo(() => `/x/${`${name}@${version}`}${path}`, [
+    name,
+    version,
+    path,
+  ]);
   const sourceURL = useMemo(() => getSourceURL(name, version, path), [
     name,
     version,
@@ -75,9 +71,9 @@ function Module({
   ]);
 
   const links: HeaderLinks = {};
-  if (name) {
+  if (name && version) {
     links[name] = (
-      <Link href="/x/[...rest]" as={`/x/${id}`}>
+      <Link href="/x/[...rest]" as={`/x/${`${name}@${version}`}`}>
         <a>{name}</a>
       </Link>
     );
@@ -96,7 +92,9 @@ function Module({
             <span className="text-6xl font-bold">{name}</span>
             <span></span> {version}
           </h1>
-          <p className="text-gray-500">{info && info.desc}</p>
+          <p className="dark:text-gray-500 text-gray-700">
+            {info && info.desc}
+          </p>
         </div>
       </Header>
       <Main>
@@ -132,15 +130,12 @@ export async function getStaticProps({ params }) {
 
   if (!info) return { props: { found: false, index: index.info() } };
 
-  const id = `${name}@${version}`;
-
   return {
     props: {
       found: true,
       path,
       name,
       version,
-      id,
       mod,
       info,
     },

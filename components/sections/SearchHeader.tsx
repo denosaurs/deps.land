@@ -3,7 +3,6 @@ import React, { useCallback, useState } from "react";
 import Link from "next/link";
 import clsx from "clsx";
 
-import { fetcher } from "~/pages/_app";
 import { HeaderLinks } from "./Header";
 import { IndexInfo } from "~/index/registry";
 
@@ -42,12 +41,16 @@ function SearchHeader({ selected, links, index }: SearchHeaderProps) {
           </Link>
         </p>
         <div className="py-3 hidden xs:block">
-          <div className="inline-flex w-full">
+          <div className="inline-flex shadow-lg">
             <input
-              className="bg-gray-300 dark:bg-gray-700 font-medium py-2 px-4 rounded-l rounded-r-none w-72"
+              className="bg-gray-300 dark:bg-gray-700 font-medium py-2 px-4 rounded-l rounded-r-none w-72 search focus:outline-none"
               id="search"
-              type="text"
+              type="search"
               placeholder="name, keyword, ..."
+              autoCapitalize="off"
+              autoCorrect="off"
+              autoComplete="off"
+              aria-label="Search modules"
               onChange={onSearchChange}
             />
             <button

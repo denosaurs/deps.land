@@ -1,10 +1,11 @@
 /* Copyright 2020 the Deno authors. All rights reserved. MIT license. */
+/* Modified */
 
 import React from "react";
 
 function InlineCode(props: { children: React.ReactNode }) {
   return (
-    <code className="py-0.5 px-1 font-mono rounded-sm bg-gray-100 dark:bg-gray-950 deno-inlinecode">
+    <code className="font-mono rounded-sm focus:language-text">
       {props.children}
     </code>
   );

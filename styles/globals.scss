@@ -12,6 +12,11 @@
   content: ", ";
 }
 
+.search:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(21, 156, 228, 0.4);
+}
+
 /* removes focus outlines on mouse clicks */
 *:focus:not(:focus-visible),
 *::before:focus:not(:focus-visible),
@@ -33,14 +38,13 @@
 }
 
 .link {
-  @apply text-blue-500;
   @apply transition;
   @apply duration-75;
   @apply ease-in-out;
-}
-
-.link:hover {
-  @apply text-blue-400;
+  @apply text-blue-500;
+  :hover {
+    @apply text-blue-400;
+  }
 }
 
 span.token.plain:empty:before {
@@ -49,10 +53,9 @@ span.token.plain:empty:before {
 
 ol.nested {
   counter-reset: item;
-}
-
-ol.nested li {
-  display: block;
+  li {
+    display: block;
+  }
 }
 
 ol.nested li:before {

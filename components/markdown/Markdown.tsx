@@ -1,4 +1,5 @@
 /* Copyright 2020 the Deno authors. All rights reserved. MIT license. */
+/* Modified */
 
 import React, { useEffect } from "react";
 
@@ -78,18 +79,6 @@ function LinkRenderer(props: LinkRendererProps) {
     href = decodeURIComponent(relativeToAbsolute(props.displayURL, href));
   }
 
-  const hrefURL = href ? new URL(href) : undefined;
-
-  // Manual links should not have trailing .md
-  if (
-    hrefURL?.pathname?.startsWith("/manual") &&
-    hrefURL?.origin === "https://deno.land"
-  ) {
-    hrefURL.pathname = hrefURL.pathname.replace(/\.md$/, "");
-    href = hrefURL.href;
-  }
-
-  // TODO(lucacasonato): Use next.js Link
   return (
     <a href={href} className="link">
       {props.children}
@@ -108,19 +97,11 @@ function ImageRenderer(props: {
 }) {
   let src = props.src;
   const className = "max-w-full inline-block";
-  const isManual = new URL(props.displayURL).pathname.startsWith("/manual");
-
   if (isRelative(src)) {
     src = relativeToAbsolute(props.sourceURL, src);
   }
 
-  return isManual ? (
-    <a href={src} className={className}>
-      <img src={src} />
-    </a>
-  ) : (
-    <img className={className} src={src} />
-  );
+  return <img className={className} src={src} alt="module-markdown-image" />;
 }
 
 const renderers = (displayURL: string, sourceURL: string) => ({

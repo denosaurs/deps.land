@@ -20,7 +20,7 @@ function CategoryBox({ category, title, description }: CategoryBoxProps) {
     <div>
       <header className="pb-4">
         <a>
-          <h3 className="text-xl font-semibold">{title}</h3>
+          <h2 className="text-xl font-semibold">{title}</h2>
           <span className="text-sm text-gray-500">{description}</span>
         </a>
       </header>
