@@ -5,6 +5,7 @@ import Link from "next/link";
 import Header, { HeaderLinks } from "~/components/sections/Header";
 import Main from "~/components/sections/Main";
 import Layout from "~/components/layout/Layout";
+import Meta from "~/components/seo/Meta";
 
 const links: HeaderLinks = {
   about: (
@@ -19,9 +20,7 @@ const links: HeaderLinks = {
 function About() {
   return (
     <Layout>
-      <Head>
-        <title>deps.land — land of the Deno modules // deps.land</title>
-      </Head>
+      <Meta title="about" />
       <Header selected="about" links={links} arrow="about" />
       <Main>
         <section className="container max-w-6xl mx-auto p-4"></section>

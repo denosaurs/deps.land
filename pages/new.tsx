@@ -8,6 +8,7 @@ import CategoryBox from "~/components/category/CategoryBox";
 import Layout from "~/components/layout/Layout";
 import Main from "~/components/sections/Main";
 import { info, IndexInfo } from "~/index/registry";
+import Meta from "~/components/seo/Meta";
 
 const links: HeaderLinks = {
   categories: (
@@ -29,9 +30,7 @@ interface NewProps {
 export default function New({ index }: NewProps) {
   return (
     <Layout>
-      <Head>
-        <title>deps.land — land of the Deno modules // deps.land</title>
-      </Head>
+      <Meta title="new" />
       <SearchHeader selected="new" links={links} index={index} />
       <Main>
         <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 col-gap-4 row-gap-8">

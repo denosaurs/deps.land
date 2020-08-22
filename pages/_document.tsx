@@ -15,7 +15,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang="en">
+      <Html lang="en" prefix="og: http://ogp.me/ns#">
         <Head>
           <link rel="stylesheet" href="/fonts/inter/inter.css" />
         </Head>

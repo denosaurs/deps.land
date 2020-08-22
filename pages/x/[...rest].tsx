@@ -14,6 +14,7 @@ import { useMemo, useEffect } from "react";
 import { parseNameVersion, getSourceURL } from "~/modules/x";
 import index, { ModuleInfo, VersionInfo, IndexInfo } from "~/index/registry";
 import Error from "~/pages/404";
+import Meta from "~/components/seo/Meta";
 
 interface ModuleProps {
   found: boolean;
@@ -83,9 +84,7 @@ function Module({ found, name, version, path, mod, info, index }: ModuleProps) {
 
   return (
     <Layout>
-      <Head>
-        <title>{name} — land of the Deno modules // deps.land</title>
-      </Head>
+      <Meta title={name} dynamic />
       <Header selected={name} links={links} arrow={name}>
         <div className="py-4">
           <h1>

@@ -5,6 +5,7 @@ import SearchHeader from "~/components/sections/SearchHeader";
 import Layout from "~/components/layout/Layout";
 import Main from "~/components/sections/Main";
 import { info, IndexInfo } from "~/index/registry";
+import Meta from "~/components/seo/Meta";
 
 interface IndexProps {
   index: IndexInfo;
@@ -13,9 +14,7 @@ interface IndexProps {
 function Error({ index }: IndexProps) {
   return (
     <Layout>
-      <Head>
-        <title>deps.land — land of the Deno modules // deps.land</title>
-      </Head>
+      <Meta title="404" />
       <SearchHeader selected="categories" index={index} />
       <Main>
         <div className="m-auto text-center">

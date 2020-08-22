@@ -25,6 +25,11 @@ const handler: NextApiHandler = async (req, res) => {
   let source = await Module.source(name, version, rest);
 
   if (!source) {
+    // TODO(@qu4k): fix this problem upstream in bors
+    source = await Module.source(name, `v${version}`, rest);
+  }
+
+  if (!source) {
     res.status(404).json({ message: "Module not found." });
     return;
   }
