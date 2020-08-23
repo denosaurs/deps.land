@@ -45,19 +45,25 @@ interface SearchBoxProps {
 
 function SearchBox({ hits, currentRefinement, refine }: SearchBoxProps) {
   return (
-    <div className="relative">
-      <input
-        className="bg-gray-300 dark:bg-gray-700 font-medium py-2 px-4 rounded-l rounded-r-none w-96 focus:outline-none appearance-none"
-        name="search"
-        type="search"
-        placeholder="name, keyword, ..."
-        autoCapitalize="off"
-        autoCorrect="off"
-        autoComplete="off"
-        aria-label="Search modules"
-        value={currentRefinement}
-        onChange={(event) => refine(event.currentTarget.value)}
-      />
+    <div className="relative w-full flex-grow">
+      <div className="flex">
+        <input
+          className="bg-gray-300 dark:bg-gray-700 font-medium py-2 px-4 flex-grow rounded-l rounded-r-none focus:outline-none appearance-none"
+          name="search"
+          type="search"
+          placeholder="name, keyword, ..."
+          autoCapitalize="off"
+          autoCorrect="off"
+          autoComplete="off"
+          aria-label="Search modules"
+          value={currentRefinement}
+          onChange={(event) => refine(event.currentTarget.value)}
+        />
+
+        <button className="bg-gray-400 hover:bg-gray-400 text-gray-800 ml- font-bold py-2 px-4 rounded-l-none rounded-r">
+          Search
+        </button>
+      </div>
       {currentRefinement && (
         <div className="absolute bg-white dark:bg-gray-900 rounded w-full mt-2 p-2 shadow-md">
           <ul>
@@ -102,15 +108,13 @@ function SearchHeader({ selected, links, index }: SearchHeaderProps) {
           </Link>
         </p>
         <div className="py-3 hidden xs:block">
-          <div className="inline-flex shadow-md">
+          <div className="flex">
             <InstantSearch
               indexName={algoliaIndex}
               searchClient={algoliaClient}
             >
               <AlgoliaSearchBox />
-              <button className="bg-gray-400 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l-none rounded-r">
-                Search
-              </button>
+              <div className="md:w-7/12 flex-none"></div>
             </InstantSearch>
           </div>
         </div>
