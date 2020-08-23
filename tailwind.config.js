@@ -10,6 +10,9 @@ module.exports = {
       whitelist: [],
     },
   },
+  variants: {
+    borderWidth: ["responsive", "last", "hover", "focus"],
+  },
   theme: {
     fontFamily: {
       mono: [

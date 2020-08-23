@@ -1,0 +1,7 @@
+deps.index
+.prettierignore
+.prettierrc.json
+jest.config.js
+LICENSE
+README.md
+.env.local

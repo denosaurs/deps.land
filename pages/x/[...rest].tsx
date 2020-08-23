@@ -12,7 +12,7 @@ import Markdown from "~/components/markdown/Markdown";
 import { fetcher } from "~/pages/_app";
 import { useMemo, useEffect } from "react";
 import { parseNameVersion, getSourceURL } from "~/modules/x";
-import index, { ModuleInfo, VersionInfo, IndexInfo } from "~/index/registry";
+import idx, { ModuleInfo, VersionInfo, IndexInfo } from "~/index";
 import Error from "~/pages/404";
 import Meta from "~/components/seo/Meta";
 
@@ -43,7 +43,6 @@ function Module({ found, name, version, path, mod, info, index }: ModuleProps) {
   function gotoVersion(v: string, replace?: boolean) {
     const href = "/x/[...rest]";
     const as = `/x/${name}@${v}${path}`;
-    console.log(v);
     replace ? router.replace(href, as) : router.push(href, as);
   }
 
@@ -121,13 +120,13 @@ export async function getStaticProps({ params }) {
 
   let [name, version] = parseNameVersion(identifier ?? "");
 
-  const mod = await index.module("x", name);
-  if (!mod) return { props: { found: false, index: index.info() } };
+  const mod = await idx.registry("x").module(name);
+  if (!mod) return { props: { found: false, index: idx.info() } };
 
   let info = mod.versions[version ?? mod.latest];
   version = version ?? null;
 
-  if (!info) return { props: { found: false, index: index.info() } };
+  if (!info) return { props: { found: false, index: idx.info() } };
 
   return {
     props: {

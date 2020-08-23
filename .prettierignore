@@ -5,4 +5,5 @@ public/icons
 public/images
 .prettierignore
 .gitignore
+.vercelignore
 deps.index

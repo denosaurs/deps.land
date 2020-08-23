@@ -1,35 +1,35 @@
-const path = require("path");
-const fs = require("fs");
-const log = require("debug")("git-index");
-const git = require("isomorphic-git");
-const http = require("isomorphic-git/http/node");
+import fs from "fs";
+import git from "isomorphic-git";
+import http from "isomorphic-git/http/node";
+
+import { INDEX } from "../index";
 
 const INDEX_REPO = "https://github.com/denosaurs/deps.index.git";
 const AUTHOR = { name: "deps.land" };
-const dir = path.join(process.cwd(), "deps.index");
 
-async function main() {
+const log = require("debug")("git-index");
+
+async function index() {
   log("initializing...");
-  if (!fs.existsSync(dir)) {
+  if (!fs.existsSync(INDEX)) {
     log("cloning index...");
     await git.clone({
       fs,
       http,
-      dir,
+      dir: INDEX,
       url: INDEX_REPO,
     });
-    log("cloning done!");
   } else {
     log("updating index...");
     await git.pull({
       fs,
       http,
-      dir,
+      dir: INDEX,
       singleBranch: true,
       author: AUTHOR,
     });
-    log("updating done!");
   }
+  log("done!");
 }
 
-main();
+export default index;

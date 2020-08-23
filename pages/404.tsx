@@ -4,7 +4,7 @@ import Head from "next/head";
 import SearchHeader from "~/components/sections/SearchHeader";
 import Layout from "~/components/layout/Layout";
 import Main from "~/components/sections/Main";
-import { info, IndexInfo } from "~/index/registry";
+import idx, { IndexInfo } from "~/index";
 import Meta from "~/components/seo/Meta";
 
 interface IndexProps {
@@ -27,7 +27,7 @@ function Error({ index }: IndexProps) {
 }
 
 export async function getStaticProps() {
-  const index = info();
+  const index = idx.info();
   return {
     props: {
       index,

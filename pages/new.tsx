@@ -7,7 +7,7 @@ import SearchHeader from "~/components/sections/SearchHeader";
 import CategoryBox from "~/components/category/CategoryBox";
 import Layout from "~/components/layout/Layout";
 import Main from "~/components/sections/Main";
-import { info, IndexInfo } from "~/index/registry";
+import idx, { IndexInfo } from "~/index";
 import Meta from "~/components/seo/Meta";
 
 const links: HeaderLinks = {
@@ -71,7 +71,7 @@ export default function New({ index }: NewProps) {
 }
 
 export async function getStaticProps() {
-  const index = info();
+  const index = idx.info();
   return {
     props: {
       index,

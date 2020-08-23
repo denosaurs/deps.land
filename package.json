@@ -17,8 +17,10 @@
     ]
   },
   "scripts": {
-    "setup": "DEBUG=* node index/setup.js",
-    "dev": "yarn setup && next dev",
+    "setup": "DEBUG=* ts-node -P setup/tsconfig.setup.json setup/setup.ts",
+    "setup-full": "DEBUG=* ts-node -P setup/tsconfig.setup.json setup/setup.ts FULL",
+    "setup-dev": "DEBUG=* ts-node -P setup/tsconfig.setup.json setup/setup.ts DEV",
+    "dev": "yarn setup-dev && next dev",
     "build": "yarn setup && next build",
     "start": "next start",
     "lint": "prettier --write"
@@ -26,8 +28,7 @@
   "dependencies": {
     "next": "9.5.1",
     "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-markdown": "^4.3.1"
+    "react-dom": "16.13.1"
   },
   "devDependencies": {
     "@svgr/webpack": "^5.4.0",
@@ -35,22 +36,29 @@
     "@types/jest": "^26.0.9",
     "@types/node": "^14.0.27",
     "@types/react": "^16.9.44",
+    "@types/react-instantsearch-dom": "^6.3.0",
+    "algoliasearch": "^4.4.0",
     "autoprefixer": "^9.8.0",
     "clsx": "^1.1.1",
     "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
     "glob": "^7.1.6",
     "husky": "^4.2.5",
     "isomorphic-git": "^1.7.4",
     "jest": "^26.3.0",
     "lint-staged": "^10.2.11",
+    "moment": "^2.27.0",
     "postcss-import": "^12.0.1",
     "prettier": "^2.0.5",
     "prism-react-renderer": "^1.1.1",
     "prismjs": "^1.21.0",
+    "react-instantsearch-dom": "^6.7.0",
+    "react-markdown": "^4.3.1",
     "sass": "^1.26.10",
     "swr": "^0.3.1",
     "tailwindcss": "^1.7.3",
     "ts-jest": "^26.2.0",
+    "ts-node": "^9.0.0",
     "typescript": "^3.9.7"
   }
 }

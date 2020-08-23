@@ -1,5 +1,4 @@
 import React from "react";
-import Head from "next/head";
 import Link from "next/link";
 
 import { HeaderLinks } from "~/components/sections/Header";
@@ -7,7 +6,7 @@ import SearchHeader from "~/components/sections/SearchHeader";
 import CategoryBox from "~/components/category/CategoryBox";
 import Layout from "~/components/layout/Layout";
 import Main from "~/components/sections/Main";
-import { IndexInfo, info } from "~/index/registry";
+import idx, { IndexInfo } from "~/index";
 import Meta from "~/components/seo/Meta";
 
 const links: HeaderLinks = {
@@ -71,7 +70,7 @@ export default function Index({ index }: IndexProps) {
 }
 
 export async function getStaticProps() {
-  const index = info();
+  const index = idx.info();
   return {
     props: {
       index,
